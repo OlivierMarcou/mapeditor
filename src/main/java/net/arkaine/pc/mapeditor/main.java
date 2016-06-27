@@ -7,7 +7,7 @@ public class main {
 
     public static void main(String[] args){
         Editeur editeur = new Editeur();
-
+        Editeur.showOnScreen(0,editeur);
     }
 
 
