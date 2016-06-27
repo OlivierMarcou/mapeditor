@@ -19,6 +19,16 @@ public class Editeur extends JFrame{
     private JPanel all;
     private JPanel casesContener;
 
+    public JPanel getCenterImage() {
+        return centerImage;
+    }
+
+    public void setCenterImage(JPanel centerImage) {
+        this.centerImage = centerImage;
+    }
+
+    private JPanel centerImage;
+
 
     private MouseAdapter caseEvent = new MouseAdapterJPanel();
 
