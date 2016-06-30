@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ public class Editeur extends JFrame{
 
     private JTextField filename = new JTextField(), dir = new JTextField();
 
+    private static MapLoader map = new MapLoader(10000,10000,11);
     private JPanel all;
     private JPanel casesContener;
 
@@ -178,6 +180,7 @@ public class Editeur extends JFrame{
             if (rVal == JFileChooser.APPROVE_OPTION) {
                 filename.setText(c.getSelectedFile().getName());
                 dir.setText(c.getCurrentDirectory().toString());
+                map.load(c.getCurrentDirectory().toString() + File.separatorChar + c.getSelectedFile().getName());
             }
             if (rVal == JFileChooser.CANCEL_OPTION) {
                 filename.setText("You pressed cancel");
