@@ -2,6 +2,7 @@ package net.arkaine.pc.mapeditor;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.CharBuffer;
@@ -119,14 +120,14 @@ public class Utils {
     }
 
     static public ImageIcon loadImage(String absolutPath){
-
         File imgFile = new  File(absolutPath);
         ImageIcon image = null;
         if(imgFile.exists()){
             try {
 
                 BufferedImage myPicture = ImageIO.read(new File(absolutPath));
-                image = new ImageIcon(myPicture);
+                Image scaledImage = myPicture.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+                image = new ImageIcon(scaledImage);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
