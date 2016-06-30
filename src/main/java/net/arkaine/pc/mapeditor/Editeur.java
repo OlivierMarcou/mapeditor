@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,14 +26,6 @@ public class Editeur extends JFrame{
     private JPanel all;
     private JPanel casesContener;
 
-    public JPanel getSelectImage2() {
-        return selectImage2;
-    }
-
-    public void setSelectImage2(JPanel selectImage2) {
-        this.selectImage2 = selectImage2;
-    }
-
     private JPanel selectImage2;
     private JButton loadButton;
     private JButton saveButton;
@@ -40,7 +33,7 @@ public class Editeur extends JFrame{
     private JPanel selectImage1;
     private JPanel selectImage3;
     private JPanel selectImage4;
-    private Map<Integer,ImageIcon> images = Utils.loadImages("/home/olivier/workspace/mapeditor/src/main/resources/mursShoot/");
+    private Map<Integer,Image> images = Utils.loadImages("/home/olivier/workspace/mapeditor/src/main/resources/mursShoot/");
 
     private MouseAdapter caseEvent = new MouseAdapterJPanel();
 
@@ -92,45 +85,62 @@ public class Editeur extends JFrame{
                 casesContener.add(panel, c);
             }
         }
-        changeSelectImage(0);
+        selectImage0
+                .addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        super.mouseClicked(e);
+                        changeSelectImage( -2);
+                    }
+                });
+        selectImage1
+                .addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        super.mouseClicked(e);
+                        changeSelectImage( -1);
+                    }
+                });
+        selectImage2
+                .addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        super.mouseClicked(e);
+                        changeSelectImage( 0);
+                    }
+                });
+        selectImage3
+                .addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        super.mouseClicked(e);
+                        changeSelectImage( +1);
+                    }
+                });
+        selectImage4
+                .addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        super.mouseClicked(e);
+                        changeSelectImage( +2);
+                    }
+                });
+        changeSelectImage(2);
     }
 
     //TODO : en cours
-    private void changeSelectImage(int isIncrease){
-        if(isIncrease == 1){
-
-        }
-        if(isIncrease == 0){
-
-        }
-        if(isIncrease == -1){
-
-        }
-        selectImage = selectImage + isIncrease;
-        JLabel image = new JLabel((Icon) images.get(selectImage-2));
-        selectImage0.setLayout(new BorderLayout());
-        selectImage0.add(image);
-
-        image = new JLabel((Icon) images.get(selectImage-1));
-        selectImage1.setLayout(new BorderLayout());
-        selectImage1.add(image);
-
-        image = new JLabel((Icon) images.get(selectImage));
-        selectImage2.setLayout(new BorderLayout());
-        selectImage2.add(image);
-
-        image = new JLabel((Icon) images.get(selectImage+1));
-        selectImage3.setLayout(new BorderLayout());
-        selectImage3.add(image);
-
-        image = new JLabel((Icon) images.get(selectImage+2));
-        selectImage4.setLayout(new BorderLayout());
-        selectImage4.add(image);
+    private void changeSelectImage(int modifier){
+        selectImage = selectImage + modifier;
+        selectImage0.getGraphics().drawImage(images.get(selectImage-2),0,0,null);
+        selectImage1.getGraphics().drawImage(images.get(selectImage-1),0,0,null);
+        selectImage2.getGraphics().drawImage(images.get(selectImage),0,0,null);
+        selectImage3.getGraphics().drawImage(images.get((selectImage+1)),0,0,null);
+        selectImage4.getGraphics().drawImage(images.get(selectImage+2),0,0,null);
         indexImage.setMaximumSize(new Dimension(20,20));
         decreaseIndex.setMaximumSize(new Dimension(20,20));
         increaseIndex.setMaximumSize(new Dimension(20,20));
         selectImage2.setMaximumSize(new Dimension(20,20));
-        selectImage0.setMaximumSize(new Dimension(20,20));
+        selectImage4.setMaximumSize(new Dimension(20,20));
         indexImage.setText(String.valueOf(selectImage));
     }
 

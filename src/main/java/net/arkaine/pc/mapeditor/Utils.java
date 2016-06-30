@@ -1,7 +1,6 @@
 package net.arkaine.pc.mapeditor;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -119,15 +118,13 @@ public class Utils {
         }
     }
 
-    static public ImageIcon loadImage(String absolutPath){
+    static public Image loadImage(String absolutPath){
         File imgFile = new  File(absolutPath);
-        ImageIcon image = null;
+        Image image = null;
         if(imgFile.exists()){
             try {
-
                 BufferedImage myPicture = ImageIO.read(new File(absolutPath));
-                Image scaledImage = myPicture.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-                image = new ImageIcon(scaledImage);
+                image = myPicture.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -135,9 +132,9 @@ public class Utils {
         return image;
     }
 
-    static public Map<Integer, ImageIcon> loadImages(String path){
+    static public Map<Integer, Image> loadImages(String path){
         File directory = new File(path);
-        Map<Integer, ImageIcon> bitmaps = new HashMap<Integer, ImageIcon>();
+        Map<Integer, Image> bitmaps = new HashMap<Integer, Image>();
 
         for(int i= 0;i<directory.list().length; i++)
             {

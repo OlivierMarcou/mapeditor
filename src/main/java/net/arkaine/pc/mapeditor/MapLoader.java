@@ -1,6 +1,6 @@
 package net.arkaine.pc.mapeditor;
 
-import javax.swing.*;
+import java.awt.*;
 import java.io.Serializable;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -25,8 +25,8 @@ public class MapLoader implements Serializable {
     private int tailleZ = 0;
 
 
-    private Map<Integer, ImageIcon> sols = new HashMap<Integer, ImageIcon>();
-    private Map<Integer, ImageIcon> murs = new HashMap<Integer, ImageIcon>();
+    private Map<Integer, Image> sols = new HashMap<Integer, Image>();
+    private Map<Integer, Image> murs = new HashMap<Integer, Image>();
 
     private Case[][][] carte;
 
