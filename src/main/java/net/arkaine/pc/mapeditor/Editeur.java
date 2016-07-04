@@ -3,10 +3,7 @@ package net.arkaine.pc.mapeditor;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +16,6 @@ public class Editeur extends JFrame{
     private int selectImage = 1;
     private JCheckBox traversableCheckBox;
     private JTextField indexImage;
-    private JButton decreaseIndex;
-    private JButton increaseIndex;
 
     private JTextField filename = new JTextField(), dir = new JTextField();
 
@@ -31,38 +26,35 @@ public class Editeur extends JFrame{
     private JPanel selectImage2;
     private JButton loadButton;
     private JButton saveButton;
-    private JPanel selectImage0;
-    private JPanel selectImage1;
-    private JPanel selectImage3;
-    private JPanel selectImage4;
-    private Map<Integer,Image> images = Utils.loadImages("/home/olivier/workspace/mapeditor/src/main/resources/mursShoot/");
+    private JPanel murs;
+    private JPanel sols;
+    private List<SelectPanel> panelsMurs = new ArrayList<>();;
+    private List<SelectPanel> panelsSols = new ArrayList<>();;
+
+    private Map<Integer,Image> imagesMurs = Utils.loadImages("/home/olivier/workspace/mapeditor/src/main/resources/mursShoot/");
+    private Map<Integer,Image> imagesSols = Utils.loadImages("/home/olivier/workspace/mapeditor/src/main/resources/solsShoot/");
 
     private MouseAdapter caseEvent = new MouseAdapterJPanel();
 
     public Editeur(){
+        this.addComponentListener(new ComponentAdapter() {
+            public void componentHidden(ComponentEvent e)
+            {
+    /* code run when component hidden*/
+            }
+            public void componentShown(ComponentEvent e) {
+
+            }
+        });
         setContentPane(all);
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(0,0,1024,800);
         setSize(1024,800);
-//        setLayout(new GridBagLayout());
         List<JPanel> cases = new ArrayList<>();
         loadButton.addActionListener(new OpenL());
         saveButton.addActionListener(new SaveL());
-        decreaseIndex.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                changeSelectImage(-1);
-            }
-        });
 
-
-        increaseIndex.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                changeSelectImage(1);
-            }
-        });
         setVisible(false);
         all.setBounds(0,0,1024,800);
         all.setAlignmentX(0.0f);
@@ -87,62 +79,63 @@ public class Editeur extends JFrame{
                 casesContener.add(panel, c);
             }
         }
-        selectImage0
-                .addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        super.mouseClicked(e);
-                        changeSelectImage( -2);
-                    }
-                });
-        selectImage1
-                .addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        super.mouseClicked(e);
-                        changeSelectImage( -1);
-                    }
-                });
-        selectImage2
-                .addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        super.mouseClicked(e);
-                        changeSelectImage( 0);
-                    }
-                });
-        selectImage3
-                .addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        super.mouseClicked(e);
-                        changeSelectImage( +1);
-                    }
-                });
-        selectImage4
-                .addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        super.mouseClicked(e);
-                        changeSelectImage( +2);
-                    }
-                });
-        changeSelectImage(2);
+
+        int indexImg = 0 ;
+        murs.setLayout(new GridBagLayout());
+        for(Image image: imagesMurs.values()){
+            SelectPanel panel = new SelectPanel(image);
+            String name = "selectMur"+indexImg;
+            panel.setName(name);
+            panel.setBounds(indexImg*40,400,40,40);
+            panel.setVisible(true);
+            panel.setBorder(new LineBorder(Color.black));
+            panel.setBackground(Color.BLUE);
+            cases.add(panel);
+            c.gridx=indexImg;
+            c.gridy=0;
+            murs.add(panel, c);
+            panelsMurs.add(panel);
+            indexImg ++;
+            final int finalIndexImg = indexImg;
+            panel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                    changeSelectImage(finalIndexImg);
+                }
+            });
+        }
+
+        indexImg = 0 ;
+        sols.setLayout(new GridBagLayout());
+        for(Image image: imagesSols.values()){
+            SelectPanel panel = new SelectPanel(image);
+            String name = "selectMur"+indexImg;
+            panel.setName(name);
+            panel.setBounds(indexImg*40,400,40,40);
+            panel.setVisible(true);
+            panel.setBorder(new LineBorder(Color.black));
+            panel.setBackground(Color.BLUE);
+            cases.add(panel);
+            c.gridx=indexImg;
+            c.gridy=0;
+            sols.add(panel, c);
+            panelsSols.add(panel);
+            indexImg ++;
+            final int finalIndexImg = indexImg;
+            panel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                    changeSelectImage(finalIndexImg);
+                }
+            });
+        }
     }
 
     //TODO : en cours
-    private void changeSelectImage(int modifier){
-        selectImage = selectImage + modifier;
-        selectImage0.getGraphics().drawImage(images.get(selectImage-2),0,0,null);
-        selectImage1.getGraphics().drawImage(images.get(selectImage-1),0,0,null);
-        selectImage2.getGraphics().drawImage(images.get(selectImage),0,0,null);
-        selectImage3.getGraphics().drawImage(images.get((selectImage+1)),0,0,null);
-        selectImage4.getGraphics().drawImage(images.get(selectImage+2),0,0,null);
-        indexImage.setMaximumSize(new Dimension(20,20));
-        decreaseIndex.setMaximumSize(new Dimension(20,20));
-        increaseIndex.setMaximumSize(new Dimension(20,20));
-        selectImage2.setMaximumSize(new Dimension(20,20));
-        selectImage4.setMaximumSize(new Dimension(20,20));
+    private void changeSelectImage(int index){
+        selectImage = index;
         indexImage.setText(String.valueOf(selectImage));
     }
 
