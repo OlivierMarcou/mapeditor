@@ -14,22 +14,30 @@ import java.util.Map;
  */
 public class Editeur extends JFrame{
     private int selectImage = 1;
-    private JCheckBox traversableCheckBox;
-    private JTextField indexImage;
-
-    private JTextField filename = new JTextField(), dir = new JTextField();
 
     private static MapLoader map = new MapLoader(10000,10000,11);
-    private JPanel all;
-    private JPanel casesContener;
+    private JPanel all = new JPanel();
+    private JPanel casesContener = new JPanel();
 
-    private JPanel selectImage2;
-    private JButton loadButton;
-    private JButton saveButton;
-    private JPanel murs;
-    private JPanel sols;
-    private List<SelectPanel> panelsMurs = new ArrayList<>();;
-    private List<SelectPanel> panelsSols = new ArrayList<>();;
+    private JButton loadButton = new JButton("Load");
+    private JButton saveButton = new JButton("Save");
+
+
+    private JTextField filename = new JTextField(), dir = new JTextField();
+    private JLabel transparence = new JLabel("Transparence");
+    private JCheckBox traversableCheckBox = new JCheckBox("Traversable");
+    private JLabel lumiere= new JLabel("Lumiere");
+    private JLabel atmosphere = new JLabel("Atmosphere");
+    private JLabel life = new JLabel("Life");
+    private JLabel typeCase = new JLabel("Type case :");
+
+    private List<SelectPanel> panelsMurs = new ArrayList<>();
+    private List<SelectPanel> panelsSols = new ArrayList<>();
+
+    private JTextField indexImage = new JTextField(0);
+    private List<JPanel> cases = new ArrayList<>();
+    private JPanel murs = new JPanel();
+    private JPanel sols = new JPanel();
 
     private Map<Integer,Image> imagesMurs = Utils.loadImages("/home/olivier/workspace/mapeditor/src/main/resources/mursShoot/");
     private Map<Integer,Image> imagesSols = Utils.loadImages("/home/olivier/workspace/mapeditor/src/main/resources/solsShoot/");
@@ -45,21 +53,98 @@ public class Editeur extends JFrame{
             public void componentShown(ComponentEvent e) {
 
             }
-        });
-        setContentPane(all);
-        pack();
+        });        pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(0,0,1024,800);
         setSize(1024,800);
-        List<JPanel> cases = new ArrayList<>();
         loadButton.addActionListener(new OpenL());
         saveButton.addActionListener(new SaveL());
 
-        setVisible(false);
+        setLayout(new GridBagLayout());
+        setContentPane(all);
+        all.setBorder(new LineBorder(Color.black));
+        all.setLayout(new GridBagLayout());
+
         all.setBounds(0,0,1024,800);
         all.setAlignmentX(0.0f);
+
         casesContener.setLayout(new GridBagLayout());
+
         GridBagConstraints c = new GridBagConstraints();
+
+        c.gridx=0;
+        c.gridy=0;
+        c.gridwidth=1;
+        c.gridheight= 9;
+        all.add(casesContener, c);
+
+        c.gridx=1;
+        c.gridy=1;
+        c.gridwidth=1;
+        c.gridheight= 1;
+        all.add(loadButton, c);
+
+        c.gridx=1;
+        c.gridy=2;
+        c.gridwidth=1;
+        c.gridheight= 1;
+        all.add(saveButton, c);
+
+        c.gridx=1;
+        c.gridy=3;
+        c.gridwidth=1;
+        c.gridheight= 1;
+        all.add(transparence , c);
+
+        c.gridx=1;
+        c.gridy=4;
+        c.gridwidth=1;
+        c.gridheight= 1;
+        all.add(traversableCheckBox , c);
+
+        c.gridx=1;
+        c.gridy=5;
+        c.gridwidth=1;
+        c.gridheight= 1;
+        all.add(lumiere, c);
+
+        c.gridx=1;
+        c.gridy=6;
+        c.gridwidth=1;
+        c.gridheight= 1;
+        all.add(atmosphere , c);
+
+        c.gridx=1;
+        c.gridy=7;
+        c.gridwidth=1;
+        c.gridheight= 1;
+        all.add(life , c);
+
+        c.gridx=1;
+        c.gridy=8;
+        c.gridwidth=1;
+        c.gridheight= 1;
+        all.add(typeCase , c);
+
+        c.gridx=0;
+        c.gridy=9;
+        c.gridwidth=1;
+        c.gridheight= 1;indexImage.setPreferredSize(new Dimension(60,40));
+        all.add(indexImage, c);
+
+        c.gridx=0;
+        c.gridy=10;
+        c.gridwidth=3;
+        c.gridheight= 1;
+        all.add(murs, c);
+
+        c.gridx=0;
+        c.gridy=11;
+        c.gridwidth=3;
+        c.gridheight= 1;
+        all.add(sols, c);
+
+        setVisible(false);
         for (int x = 0; x<20 ; x++){
             for (int y = 0; y<20 ; y++){
                 JPanel panel = new JPanel();
@@ -76,6 +161,8 @@ public class Editeur extends JFrame{
 //                c.fill = GridBagConstraints.HORIZONTAL;
                 c.gridx=x;
                 c.gridy=y+1;
+                c.gridwidth = 1;
+                c.gridheight = 1;
                 casesContener.add(panel, c);
             }
         }
@@ -93,6 +180,8 @@ public class Editeur extends JFrame{
             cases.add(panel);
             c.gridx=indexImg;
             c.gridy=0;
+            c.gridwidth = 1;
+            c.gridheight = 1;
             murs.add(panel, c);
             panelsMurs.add(panel);
             indexImg ++;
@@ -119,6 +208,8 @@ public class Editeur extends JFrame{
             cases.add(panel);
             c.gridx=indexImg;
             c.gridy=0;
+            c.gridwidth = 1;
+            c.gridheight = 1;
             sols.add(panel, c);
             panelsSols.add(panel);
             indexImg ++;

@@ -20,6 +20,6 @@ public class SelectPanel extends JPanel {
     protected void paintComponent(Graphics grphcs) {
         super.paintComponent(grphcs);
         Graphics2D g2d = (Graphics2D) grphcs;
-        g2d.drawImage(image, 0, 0, 40, 40, this);
+        g2d.drawImage(image, 0, 0, 40,40, this);
     }
 }
