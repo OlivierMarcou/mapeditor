@@ -129,7 +129,8 @@ public class Editeur extends JFrame{
         c.gridx=0;
         c.gridy=9;
         c.gridwidth=1;
-        c.gridheight= 1;indexImage.setPreferredSize(new Dimension(60,40));
+        c.gridheight= 1;
+        indexImage.setPreferredSize(new Dimension(60,20));
         all.add(indexImage, c);
 
         c.gridx=0;
