@@ -14,17 +14,17 @@ import java.util.Map;
  */
 public class Editeur extends JFrame{
 
-    private static int tailleMapX = 100;
-    private static int tailleMapY = 100;
-    private static int tailleMapZ = 10;
-    private static int caseSize = 5;
+    private static int tailleMapX;
+    private static int tailleMapY;
+    private static int tailleMapZ;
 
+    public static int caseSizeX ;
+    public static int caseSizeY ;
     public static int currentZ = 0;
     public static int selectCase = 0;
 
-    private static MapLoader map = new MapLoader(tailleMapX, tailleMapY, tailleMapZ);
-    private JPanel all = new JPanel();
-    private JMap casesContener = new JMap(map, caseSize);
+    private static MapLoader map;
+    private JMap casesContener;
 
     private JButton loadButton = new JButton("Load");
     private JButton saveButton = new JButton("Save");
@@ -51,22 +51,15 @@ public class Editeur extends JFrame{
     private Map<Integer,Image> imagesSols = Utils.loadImages("/home/olivier/workspace/mapeditor/src/main/resources/solsShoot/");
 
 
-    public Editeur(){
-        this.addComponentListener(new ComponentAdapter() {
-            public void componentHidden(ComponentEvent e)
-            {
-    /* code run when component hidden*/
-            }
-            public void componentShown(ComponentEvent e) {
-
-            }
-        });
-
+    public Editeur(int x, int y, int z){
+        tailleMapX = x;
+        tailleMapY = y;
+        tailleMapZ = z;
+        map = new MapLoader(tailleMapX, tailleMapY, tailleMapZ);
+        casesContener = new JMap(map);
         map.loadImagesShoot("/home/olivier/workspace/mapeditor/src/main/resources/");
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(0,0,1024,800);
-        setSize(1024,800);
         loadButton.addActionListener(new OpenL());
         saveButton.addActionListener(new SaveL());
         haut.addActionListener(new ActionListener() {
@@ -86,15 +79,33 @@ public class Editeur extends JFrame{
             }
         });
         setLayout(new GridBagLayout());
-        setContentPane(all);
-        all.setBorder(new LineBorder(Color.black));
-        all.setLayout(new GridBagLayout());
-
-        all.setBounds(0,0,1024,800);
-        all.setAlignmentX(0.0f);
+        this.setLayout(new GridBagLayout());
+        this.setMinimumSize(new Dimension(600, 600));
+        this.setBounds(0,0,600, 600);
 
         casesContener.setLayout(new GridBagLayout());
-        casesContener.setPreferredSize(new Dimension(caseSize*tailleMapX,caseSize*tailleMapY));
+//        casesContener.setMinimumSize(new Dimension(200, 200));
+        casesContener.setPreferredSize(new Dimension(getWidth()-200, getHeight()-200));
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                casesContener.setPreferredSize(new Dimension(getWidth()-200, getHeight()-200));
+                caseSizeX = casesContener.getWidth() / tailleMapX;
+                System.out.println(caseSizeX+" caseSizeX = " +tailleMapX+" / " +casesContener.getWidth());
+                caseSizeY = casesContener.getHeight()/ tailleMapY;
+                System.out.println(caseSizeY+" caseSizeY = " +tailleMapY+" / " +casesContener.getHeight());
+                if (caseSizeX < 1 || caseSizeY <1){
+                    casesContener.setEnabled(false);
+                }else{
+                    casesContener.setEnabled(true);
+                }
+
+            }
+        });
+        caseSizeX = casesContener.getWidth() / tailleMapX;
+        caseSizeY = casesContener.getHeight() / tailleMapY;
+
         casesContener.setBorder(new LineBorder(Color.BLACK));
         casesContener.addMouseListener(new MouseAdapterJMap());
 
@@ -104,97 +115,91 @@ public class Editeur extends JFrame{
         c.gridy=0;
         c.gridwidth=1;
         c.gridheight= 11;
-        all.add(casesContener, c);
+        this.add(casesContener, c);
 
         c.gridx=1;
         c.gridy=1;
         c.gridwidth=1;
         c.gridheight= 1;
-        all.add(loadButton, c);
+        this.add(loadButton, c);
 
         c.gridx=1;
         c.gridy=2;
         c.gridwidth=1;
         c.gridheight= 1;
-        all.add(saveButton, c);
+        this.add(saveButton, c);
 
         c.gridx=1;
         c.gridy=3;
         c.gridwidth=1;
         c.gridheight= 1;
-        all.add(transparence , c);
+        this.add(transparence , c);
 
         c.gridx=1;
         c.gridy=4;
         c.gridwidth=1;
         c.gridheight= 1;
-        all.add(traversableCheckBox , c);
+        this.add(traversableCheckBox , c);
 
         c.gridx=1;
         c.gridy=5;
         c.gridwidth=1;
         c.gridheight= 1;
-        all.add(lumiere, c);
+        this.add(lumiere, c);
 
         c.gridx=1;
         c.gridy=6;
         c.gridwidth=1;
         c.gridheight= 1;
-        all.add(atmosphere , c);
+        this.add(atmosphere , c);
 
         c.gridx=1;
         c.gridy=7;
         c.gridwidth=1;
         c.gridheight= 1;
-        all.add(life , c);
+        this.add(life , c);
 
         c.gridx=1;
         c.gridy=8;
         c.gridwidth=1;
         c.gridheight= 1;
-        all.add(typeCase , c);
+        this.add(typeCase , c);
 
         c.gridx=1;
         c.gridy=9;
         c.gridwidth=1;
         c.gridheight= 1;
-        all.add(haut , c);
+        this.add(haut , c);
 
         c.gridx=1;
         c.gridy=10;
         c.gridwidth=1;
         c.gridheight= 1;
         c.anchor = GridBagConstraints.NORTH;
-        all.add(bas , c);
+        this.add(bas , c);
 
 //-----------------------------------------------------------------
+        indexImage.setMinimumSize(new Dimension(25,20));
         c.gridx=0;
         c.gridy=11;
         c.gridwidth=1;
         c.gridheight= 1;
         indexImage.setPreferredSize(new Dimension(60,20));
-        all.add(indexImage, c);
+        this.add(indexImage, c);
 
         c.gridx=0;
         c.gridy=12;
         c.gridwidth=3;
         c.gridheight= 1;
-        all.add(murs, c);
+        this.add(murs, c);
 
         c.gridx=0;
         c.gridy=13;
         c.gridwidth=3;
         c.gridheight= 1;
-        all.add(sols, c);
+        this.add(sols, c);
 
         setVisible(false);
-        for (int x = 0; x<tailleMapX ; x++){
-            for (int y = 0; y<tailleMapY ; y++){
-                String name = "map_x"+x+"y"+y;
-
-
-            }
-        }
 
         int indexImg = 0 ;
         murs.setLayout(new GridBagLayout());
@@ -266,8 +271,6 @@ public class Editeur extends JFrame{
         selectCase = index;
         indexImage.setText(String.valueOf(index));
     }
-
-
 
     public static void showOnScreen( int screen, JFrame frame )
     {

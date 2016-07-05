@@ -9,15 +9,13 @@ import java.awt.*;
 public class JMap extends JPanel {
 
     private MapLoader map;
-    private int caseSize=0;
 
-    public JMap (MapLoader map, int caseSize) {
+    public JMap (MapLoader map) {
         this.map = map;
-        this.caseSize = caseSize;
     }
 
     public void drawCase(String selectCase, int x, int y, int z){
-        map.carte[x/caseSize][y/caseSize][z]= new Case(selectCase);
+        map.carte[x/Editeur.caseSizeX][y/Editeur.caseSizeY][z]= new Case(selectCase);
         repaint();
     }
 
@@ -26,7 +24,7 @@ public class JMap extends JPanel {
         super.paintComponent(grphcs);
         Graphics2D g2d = (Graphics2D) grphcs;
         for(int x =0; x<map.getTailleX();x++){
-            for(int y =0; y<map.getTailleX();y++){
+            for(int y =0; y<map.getTailleY();y++){
                 Image image =null ;
                 if(Editeur.currentZ%2==0){
                     try {
@@ -43,7 +41,9 @@ public class JMap extends JPanel {
 
                     }
                 }
-                g2d.drawImage(image, caseSize*x, caseSize*y, caseSize, caseSize, this);
+                g2d.drawImage(image, Editeur.caseSizeX*x, Editeur.caseSizeY*y, Editeur.caseSizeX, Editeur.caseSizeY, this);
+                g2d.setColor(Color.blue);
+                g2d.drawRect(Editeur.caseSizeX*x, Editeur.caseSizeY*y, Editeur.caseSizeX, Editeur.caseSizeY);
             }
         }
 
