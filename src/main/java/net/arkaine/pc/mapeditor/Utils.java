@@ -136,11 +136,11 @@ public class Utils {
         File directory = new File(path);
         Map<Integer, Image> bitmaps = new HashMap<Integer, Image>();
 
-        for(int i= 0;i<directory.list().length; i++)
+        for(int i= 1;i<=directory.list().length; i++)
             {
                 try
                 {
-                    bitmaps.put(i, loadImage(path + File.separatorChar + directory.list()[i]));
+                    bitmaps.put(i, loadImage(path + File.separatorChar + directory.list()[i-1]));
                 }
                 catch (Exception e)
                 {

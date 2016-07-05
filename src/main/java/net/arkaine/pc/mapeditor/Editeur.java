@@ -206,13 +206,14 @@ public class Editeur extends JFrame{
         murs.setLayout(new GridBagLayout());
         for(Image image: imagesMurs.values()){
             SelectPanel panel = new SelectPanel(image);
+            indexImg ++;
             String name = "selectMur"+indexImg;
             panel.setName(name);
             panel.setBounds(indexImg*40,400,40,40);
             panel.setVisible(true);
             panel.setBorder(new LineBorder(Color.black));
             panel.setBackground(Color.BLUE);
-            c.gridx=indexImg;
+            c.gridx=indexImg-1;
             c.gridy=0;
             c.gridwidth = 1;
             c.gridheight = 1;
@@ -226,20 +227,20 @@ public class Editeur extends JFrame{
                     changeSelectImage(finalIndexImg);
                 }
             });
-            indexImg ++;
         }
 
         indexImg = 0 ;
         sols.setLayout(new GridBagLayout());
         for(Image image: imagesSols.values()){
             SelectPanel panel = new SelectPanel(image);
+            indexImg ++;
             String name = "selectMur"+indexImg;
             panel.setName(name);
             panel.setBounds(indexImg*40,400,40,40);
             panel.setVisible(true);
             panel.setBorder(new LineBorder(Color.black));
             panel.setBackground(Color.BLUE);
-            c.gridx=indexImg;
+            c.gridx=indexImg-1;
             c.gridy=0;
             c.gridwidth = 1;
             c.gridheight = 1;
@@ -253,7 +254,6 @@ public class Editeur extends JFrame{
                     changeSelectImage(finalIndexImg);
                 }
             });
-            indexImg ++;
         }
         afficheBarImage();
     }
