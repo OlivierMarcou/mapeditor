@@ -13,15 +13,24 @@ import java.util.Map;
  * Created by olivier on 17/06/16.
  */
 public class Editeur extends JFrame{
-    private int selectImage = 1;
 
-    private static MapLoader map = new MapLoader(10000,10000,11);
+    private static int tailleMapX = 100;
+    private static int tailleMapY = 100;
+    private static int tailleMapZ = 10;
+    private static int caseSize = 5;
+
+    public static int currentZ = 0;
+    public static int selectCase = 0;
+
+    private static MapLoader map = new MapLoader(tailleMapX, tailleMapY, tailleMapZ);
     private JPanel all = new JPanel();
-    private JPanel casesContener = new JPanel();
+    private JMap casesContener = new JMap(map, caseSize);
 
     private JButton loadButton = new JButton("Load");
     private JButton saveButton = new JButton("Save");
 
+    private JButton haut = new JButton("/\\");
+    private JButton bas = new JButton("\\/");
 
     private JTextField filename = new JTextField(), dir = new JTextField();
     private JLabel transparence = new JLabel("Transparence");
@@ -35,14 +44,12 @@ public class Editeur extends JFrame{
     private List<SelectPanel> panelsSols = new ArrayList<>();
 
     private JTextField indexImage = new JTextField(0);
-    private List<JPanel> cases = new ArrayList<>();
     private JPanel murs = new JPanel();
     private JPanel sols = new JPanel();
 
     private Map<Integer,Image> imagesMurs = Utils.loadImages("/home/olivier/workspace/mapeditor/src/main/resources/mursShoot/");
     private Map<Integer,Image> imagesSols = Utils.loadImages("/home/olivier/workspace/mapeditor/src/main/resources/solsShoot/");
 
-    private MouseAdapter caseEvent = new MouseAdapterJPanel();
 
     public Editeur(){
         this.addComponentListener(new ComponentAdapter() {
@@ -53,13 +60,31 @@ public class Editeur extends JFrame{
             public void componentShown(ComponentEvent e) {
 
             }
-        });        pack();
+        });
+
+        map.loadImagesShoot("/home/olivier/workspace/mapeditor/src/main/resources/");
+        pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(0,0,1024,800);
         setSize(1024,800);
         loadButton.addActionListener(new OpenL());
         saveButton.addActionListener(new SaveL());
-
+        haut.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(currentZ<tailleMapZ)
+                    currentZ++;
+                afficheBarImage();
+            }
+        });
+        bas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(currentZ>0)
+                    currentZ--;
+                afficheBarImage();
+            }
+        });
         setLayout(new GridBagLayout());
         setContentPane(all);
         all.setBorder(new LineBorder(Color.black));
@@ -69,13 +94,16 @@ public class Editeur extends JFrame{
         all.setAlignmentX(0.0f);
 
         casesContener.setLayout(new GridBagLayout());
+        casesContener.setPreferredSize(new Dimension(caseSize*tailleMapX,caseSize*tailleMapY));
+        casesContener.setBorder(new LineBorder(Color.BLACK));
+        casesContener.addMouseListener(new MouseAdapterJMap());
 
         GridBagConstraints c = new GridBagConstraints();
 
         c.gridx=0;
         c.gridy=0;
         c.gridwidth=1;
-        c.gridheight= 9;
+        c.gridheight= 11;
         all.add(casesContener, c);
 
         c.gridx=1;
@@ -126,45 +154,45 @@ public class Editeur extends JFrame{
         c.gridheight= 1;
         all.add(typeCase , c);
 
-        c.gridx=0;
+        c.gridx=1;
         c.gridy=9;
+        c.gridwidth=1;
+        c.gridheight= 1;
+        all.add(haut , c);
+
+        c.gridx=1;
+        c.gridy=10;
+        c.gridwidth=1;
+        c.gridheight= 1;
+        c.anchor = GridBagConstraints.NORTH;
+        all.add(bas , c);
+
+//-----------------------------------------------------------------
+        c.gridx=0;
+        c.gridy=11;
         c.gridwidth=1;
         c.gridheight= 1;
         indexImage.setPreferredSize(new Dimension(60,20));
         all.add(indexImage, c);
 
         c.gridx=0;
-        c.gridy=10;
+        c.gridy=12;
         c.gridwidth=3;
         c.gridheight= 1;
         all.add(murs, c);
 
         c.gridx=0;
-        c.gridy=11;
+        c.gridy=13;
         c.gridwidth=3;
         c.gridheight= 1;
         all.add(sols, c);
 
         setVisible(false);
-        for (int x = 0; x<20 ; x++){
-            for (int y = 0; y<20 ; y++){
-                JPanel panel = new JPanel();
+        for (int x = 0; x<tailleMapX ; x++){
+            for (int y = 0; y<tailleMapY ; y++){
                 String name = "map_x"+x+"y"+y;
-                panel.setName(name);
-                panel.setBounds(x*20,y*20,20,20);
-               // panel.add(new JLabel(x + " " + y));
-                panel.setVisible(true);
-                panel.setBorder(new LineBorder(Color.black));
-                panel.setBackground(Color.WHITE);
-                panel.addMouseListener(caseEvent);
-                cases.add(panel);
 
-//                c.fill = GridBagConstraints.HORIZONTAL;
-                c.gridx=x;
-                c.gridy=y+1;
-                c.gridwidth = 1;
-                c.gridheight = 1;
-                casesContener.add(panel, c);
+
             }
         }
 
@@ -178,7 +206,6 @@ public class Editeur extends JFrame{
             panel.setVisible(true);
             panel.setBorder(new LineBorder(Color.black));
             panel.setBackground(Color.BLUE);
-            cases.add(panel);
             c.gridx=indexImg;
             c.gridy=0;
             c.gridwidth = 1;
@@ -194,6 +221,7 @@ public class Editeur extends JFrame{
                     changeSelectImage(finalIndexImg);
                 }
             });
+            indexImg ++;
         }
 
         indexImg = 0 ;
@@ -206,14 +234,12 @@ public class Editeur extends JFrame{
             panel.setVisible(true);
             panel.setBorder(new LineBorder(Color.black));
             panel.setBackground(Color.BLUE);
-            cases.add(panel);
             c.gridx=indexImg;
             c.gridy=0;
             c.gridwidth = 1;
             c.gridheight = 1;
             sols.add(panel, c);
             panelsSols.add(panel);
-            indexImg ++;
             final int finalIndexImg = indexImg;
             panel.addMouseListener(new MouseAdapter() {
                 @Override
@@ -222,13 +248,25 @@ public class Editeur extends JFrame{
                     changeSelectImage(finalIndexImg);
                 }
             });
+            indexImg ++;
+        }
+        afficheBarImage();
+    }
+
+    private void afficheBarImage() {
+        if(currentZ%2==0){
+            sols.setVisible(true);
+            murs.setVisible(false);
+        }else{
+            murs.setVisible(true);
+            sols.setVisible(false);
         }
     }
 
     //TODO : en cours
     private void changeSelectImage(int index){
-        selectImage = index;
-        indexImage.setText(String.valueOf(selectImage));
+        selectCase = index;
+        indexImage.setText(String.valueOf(index));
     }
 
 

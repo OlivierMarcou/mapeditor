@@ -1,6 +1,7 @@
 package net.arkaine.pc.mapeditor;
 
 import java.awt.*;
+import java.io.File;
 import java.io.Serializable;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -26,9 +27,26 @@ public class MapLoader implements Serializable {
 
 
     private Map<Integer, Image> sols = new HashMap<Integer, Image>();
+
+    public Map<Integer, Image> getMurs() {
+        return murs;
+    }
+
+    public void setMurs(Map<Integer, Image> murs) {
+        this.murs = murs;
+    }
+
+    public Map<Integer, Image> getSols() {
+        return sols;
+    }
+
+    public void setSols(Map<Integer, Image> sols) {
+        this.sols = sols;
+    }
+
     private Map<Integer, Image> murs = new HashMap<Integer, Image>();
 
-    private Case[][][] carte;
+    public Case[][][] carte;
 
     public int getTailleX() {
         return tailleX;
@@ -56,6 +74,9 @@ public class MapLoader implements Serializable {
 
 
     public MapLoader(int x, int y, int z){
+        this.tailleX = x;
+        this.tailleY = y;
+        this.tailleZ = z;
         this.carte = new Case[tailleX][tailleY][tailleZ];
     }
 
@@ -64,7 +85,7 @@ public class MapLoader implements Serializable {
         load(sauvegarde);
         switch (this.typeDeVue){
             case 0:
-                this.sols = Utils.loadImages("solsIso");
+                this.sols = Utils.loadImages("solsIso");//TODO: absolut path here !!!
                 this.murs = Utils.loadImages("mursIso");
                 break;
             case 1:
@@ -80,6 +101,11 @@ public class MapLoader implements Serializable {
                 this.murs = Utils.loadImages("mursGun");
                 break;
         }
+    }
+
+    public void loadImagesShoot(String path){
+            this.sols = Utils.loadImages(path + File.separatorChar + "solsShoot");
+            this.murs = Utils.loadImages(path + File.separatorChar + "mursShoot");
     }
 
     /**
