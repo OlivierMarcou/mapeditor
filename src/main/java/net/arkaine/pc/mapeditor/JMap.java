@@ -15,8 +15,12 @@ public class JMap extends JPanel {
     }
 
     public void drawCase(String selectCase, int x, int y, int z){
-        map.carte[x/Editeur.caseSizeX][y/Editeur.caseSizeY][z]= new Case(selectCase);
-        repaint();
+        try {
+            map.carte[x / Editeur.caseSizeX][y / Editeur.caseSizeY][z] = new Case(selectCase);
+            repaint();
+        }catch(IndexOutOfBoundsException e){
+
+        }
     }
 
     @Override
