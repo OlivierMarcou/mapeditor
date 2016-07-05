@@ -40,4 +40,15 @@ public class Case implements Serializable {
     public void loadPictures(){
 
     }
+
+    @Override
+    public String toString(){
+        String caseString="0_0_0_0_0_0_0_0|";
+        try {
+            caseString = type + "_" + vie + "_" + indexAnim + "_" + atmosphere + "_" + lumiere + "_" + traversable + "_" + transparence + "_" + couleurAtmos + "|";
+        }catch (NullPointerException e){
+            return caseString;
+        }
+        return caseString;
+    }
 }

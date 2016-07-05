@@ -12,7 +12,7 @@ public class MouseAdapterJMap extends MouseAdapter {
     public void mousePressed(MouseEvent e) {
         super.mousePressed(e);
         JMap map = (JMap)e.getSource();
-        map.drawCase(Editeur.selectCase+"_255_0_0_255_0_100_255", e.getX(), e.getY(), Editeur.currentZ);
+        map.drawCase(Editeur.selectCase+"_1024_0_0_1.0_0_1.0_0", e.getX(), e.getY(), Editeur.currentZ);
         System.out.println("Mon type : "+e.getSource().getClass());
         System.out.println("Je suis : "+((JMap)e.getSource()).getName());
         System.out.println("press !!!");

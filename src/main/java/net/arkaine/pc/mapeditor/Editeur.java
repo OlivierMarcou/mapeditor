@@ -2,6 +2,7 @@ package net.arkaine.pc.mapeditor;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -300,6 +301,11 @@ public class Editeur extends JFrame{
         public void actionPerformed(ActionEvent e) {
             JFileChooser c = new JFileChooser(System.getenv("HOME"));
             // Demonstrate "Open" dialog:
+            FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                    "Fichiers map.", "map");
+            c.addChoosableFileFilter(filter);
+            c.setAcceptAllFileFilterUsed(false);
+            c.setFileFilter(filter);
             int rVal = c.showOpenDialog(Editeur.this);
             if (rVal == JFileChooser.APPROVE_OPTION) {
                 filename.setText(c.getSelectedFile().getName());
@@ -317,10 +323,17 @@ public class Editeur extends JFrame{
         public void actionPerformed(ActionEvent e) {
             JFileChooser c = new JFileChooser(System.getenv("HOME"));
             // Demonstrate "Save" dialog:
+
+            FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                    "Fichiers map.", "map");
+            c.addChoosableFileFilter(filter);
+            c.setAcceptAllFileFilterUsed(false);
+            c.setFileFilter(filter);
             int rVal = c.showSaveDialog(Editeur.this);
             if (rVal == JFileChooser.APPROVE_OPTION) {
                 filename.setText(c.getSelectedFile().getName());
                 dir.setText(c.getCurrentDirectory().toString());
+                map.save(c.getSelectedFile().toString());
             }
             if (rVal == JFileChooser.CANCEL_OPTION) {
                 filename.setText("You pressed cancel");
