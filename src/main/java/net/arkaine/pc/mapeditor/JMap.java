@@ -20,6 +20,8 @@ public class JMap extends JPanel {
             repaint();
         }catch(IndexOutOfBoundsException e){
 
+        }catch (ArithmeticException ex){
+
         }
     }
 
