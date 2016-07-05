@@ -5,7 +5,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +50,15 @@ public class Editeur extends JFrame{
     private Map<Integer,Image> imagesMurs = Utils.loadImages("/home/olivier/workspace/mapeditor/src/main/resources/mursShoot/");
     private Map<Integer,Image> imagesSols = Utils.loadImages("/home/olivier/workspace/mapeditor/src/main/resources/solsShoot/");
 
+    public void load(String file){
+        map = new MapLoader(file,1);
+        tailleMapX = map.getTailleX();
+        tailleMapY = map.getTailleY();
+        tailleMapZ = map.getTailleZ();
+        casesContener = new JMap(map);
+        map.loadImagesShoot("/home/olivier/workspace/mapeditor/src/main/resources/");
+        refreshMap();
+    }
 
     public Editeur(int x, int y, int z){
         tailleMapX = x;
@@ -83,29 +91,18 @@ public class Editeur extends JFrame{
         this.setLayout(new GridBagLayout());
         this.setMinimumSize(new Dimension(600, 600));
         this.setBounds(0,0,600, 600);
-
+//        casesContener.setPreferredSize(new Dimension(getWidth()-200, getHeight()-200));
+        refreshMap();
         casesContener.setLayout(new GridBagLayout());
-//        casesContener.setMinimumSize(new Dimension(200, 200));
-        casesContener.setPreferredSize(new Dimension(getWidth()-200, getHeight()-200));
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
-                casesContener.setPreferredSize(new Dimension(getWidth()-200, getHeight()-200));
-                caseSizeX = casesContener.getWidth() / tailleMapX;
-                System.out.println(caseSizeX+" caseSizeX = " +tailleMapX+" / " +casesContener.getWidth());
-                caseSizeY = casesContener.getHeight()/ tailleMapY;
-                System.out.println(caseSizeY+" caseSizeY = " +tailleMapY+" / " +casesContener.getHeight());
-                if (caseSizeX < 1 || caseSizeY <1){
-                    casesContener.setEnabled(false);
-                }else{
-                    casesContener.setEnabled(true);
-                }
+//                casesContener.setPreferredSize(new Dimension(getWidth()-200, getHeight()-200));
+                refreshMap();
 
             }
         });
-        caseSizeX = casesContener.getWidth() / tailleMapX;
-        caseSizeY = casesContener.getHeight() / tailleMapY;
 
         casesContener.setBorder(new LineBorder(Color.BLACK));
         casesContener.addMouseListener(new MouseAdapterJMap());
@@ -258,6 +255,19 @@ public class Editeur extends JFrame{
         afficheBarImage();
     }
 
+    private void refreshMap() {
+        casesContener.setPreferredSize(new Dimension(getWidth()-200, getHeight()-200));
+        caseSizeX = casesContener.getWidth() / tailleMapX;
+        System.out.println(caseSizeX+" caseSizeX = " +tailleMapX+" / " +casesContener.getWidth());
+        caseSizeY = casesContener.getHeight()/ tailleMapY;
+        System.out.println(caseSizeY+" caseSizeY = " +tailleMapY+" / " +casesContener.getHeight());
+        if (caseSizeX < 1 || caseSizeY <1){
+            casesContener.setEnabled(false);
+        }else{
+            casesContener.setEnabled(true);
+        }
+    }
+
     private void afficheBarImage() {
         if(currentZ%2==0){
             sols.setVisible(true);
@@ -310,7 +320,7 @@ public class Editeur extends JFrame{
             if (rVal == JFileChooser.APPROVE_OPTION) {
                 filename.setText(c.getSelectedFile().getName());
                 dir.setText(c.getCurrentDirectory().toString());
-                map.load(c.getCurrentDirectory().toString() + File.separatorChar + c.getSelectedFile().getName());
+                load(c.getSelectedFile().toString());
             }
             if (rVal == JFileChooser.CANCEL_OPTION) {
                 filename.setText("You pressed cancel");

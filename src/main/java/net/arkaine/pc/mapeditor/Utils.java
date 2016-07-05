@@ -118,6 +118,31 @@ public class Utils {
         }
     }
 
+    public static String openIsoFileaAndRead(String source){
+        File readFile = new File(source);
+        String contenu = "";
+        InputStreamReader in=null;
+        try {
+            InputStream inputStream = new FileInputStream(new File(source));
+            in = new InputStreamReader(inputStream);
+            int data = in.read();
+            while(data != -1){
+                contenu += (char) data;
+                data = in.read();
+            }
+            in.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return contenu;
+    }
+
     static public Image loadImage(String absolutPath){
         File imgFile = new  File(absolutPath);
         Image image = null;

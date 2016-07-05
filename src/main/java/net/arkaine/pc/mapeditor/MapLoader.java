@@ -3,7 +3,6 @@ package net.arkaine.pc.mapeditor;
 import java.awt.*;
 import java.io.File;
 import java.io.Serializable;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -89,8 +88,8 @@ public class MapLoader implements Serializable {
                 this.murs = Utils.loadImages("mursIso");
                 break;
             case 1:
-                this.sols = Utils.loadImages("solsShoot");
-                this.murs = Utils.loadImages("mursShoot");
+                this.sols = Utils.loadImages("/home/olivier/workspace/mapeditor/src/main/resources/solsShoot");
+                this.murs = Utils.loadImages("/home/olivier/workspace/mapeditor/src/main/resources/mursShoot");
                 break;
             case 2:
                 this.sols = Utils.loadImages("solsDM");
@@ -141,7 +140,7 @@ public class MapLoader implements Serializable {
      * @return
      */
     public boolean load(String sauvegarde){
-        String data = Utils.openFile(Paths.get(sauvegarde));
+        String data = Utils.openIsoFileaAndRead(sauvegarde);
         data = data.replaceAll("[\r\n ]+", "");
 //        data = data.replace(" ","");
         if(data == null || data == "")
