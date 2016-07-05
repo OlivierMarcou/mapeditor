@@ -38,7 +38,7 @@ public class JMap extends JPanel {
                 else
                 {
                     try {
-                        image = map.getSols().get(map.carte[x][y][Editeur.currentZ].type);
+                        image = map.getMurs().get(map.carte[x][y][Editeur.currentZ].type);
                     }catch(NullPointerException e){
 
                     }

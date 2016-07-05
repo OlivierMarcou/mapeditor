@@ -212,7 +212,6 @@ public class Editeur extends JFrame{
             c.gridheight = 1;
             murs.add(panel, c);
             panelsMurs.add(panel);
-            indexImg ++;
             final int finalIndexImg = indexImg;
             panel.addMouseListener(new MouseAdapter() {
                 @Override
@@ -263,7 +262,6 @@ public class Editeur extends JFrame{
         }
     }
 
-    //TODO : en cours
     private void changeSelectImage(int index){
         selectCase = index;
         indexImage.setText(String.valueOf(index));
