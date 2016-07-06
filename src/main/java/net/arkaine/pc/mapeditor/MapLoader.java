@@ -140,7 +140,7 @@ public class MapLoader implements Serializable {
      * @return
      */
     public boolean load(String sauvegarde){
-        String data = Utils.openIsoFileaAndRead(sauvegarde);
+        String data = Utils.openFile(sauvegarde);
         data = data.replaceAll("[\r\n ]+", "");
 //        data = data.replace(" ","");
         if(data == null || data == "")

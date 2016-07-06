@@ -117,31 +117,31 @@ public class Utils {
             }
         }
     }
+public static String openFile(String source) {
+        StringBuffer contenu = new StringBuffer();
+		BufferedReader br = null;
 
-    public static String openIsoFileaAndRead(String source){
-        File readFile = new File(source);
-        String contenu = "";
-        InputStreamReader in=null;
-        try {
-            InputStream inputStream = new FileInputStream(new File(source));
-            in = new InputStreamReader(inputStream);
-            int data = in.read();
-            while(data != -1){
-                contenu += (char) data;
-                data = in.read();
-            }
-            in.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally{
-            try {
-                in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return contenu;
-    }
+		try {
+
+			String sCurrentLine;
+
+			br = new BufferedReader(new FileReader(source));
+
+			while ((sCurrentLine = br.readLine()) != null) {
+				contenu.append(sCurrentLine);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null)br.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+        return contenu.toString();
+	}
 
     static public Image loadImage(String absolutPath){
         File imgFile = new  File(absolutPath);

@@ -8,6 +8,14 @@ import java.awt.*;
  */
 public class JMap extends JPanel {
 
+    public MapLoader getMap() {
+        return map;
+    }
+
+    public void setMap(MapLoader map) {
+        this.map = map;
+    }
+
     private MapLoader map;
 
     public JMap (MapLoader map) {

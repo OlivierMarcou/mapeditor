@@ -55,9 +55,9 @@ public class Editeur extends JFrame{
         tailleMapX = map.getTailleX();
         tailleMapY = map.getTailleY();
         tailleMapZ = map.getTailleZ();
-        casesContener = new JMap(map);
-        map.loadImagesShoot("/home/olivier/workspace/mapeditor/src/main/resources/");
+        casesContener.setMap(map);
         refreshMap();
+        repaint();
     }
 
     public Editeur(int x, int y, int z){
@@ -91,14 +91,15 @@ public class Editeur extends JFrame{
         this.setLayout(new GridBagLayout());
         this.setMinimumSize(new Dimension(600, 600));
         this.setBounds(0,0,600, 600);
-//        casesContener.setPreferredSize(new Dimension(getWidth()-200, getHeight()-200));
+        casesContener.setMinimumSize(new Dimension(200, 200));
+        casesContener.setPreferredSize(new Dimension(getWidth()-200, getHeight()-200));
         refreshMap();
         casesContener.setLayout(new GridBagLayout());
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
-//                casesContener.setPreferredSize(new Dimension(getWidth()-200, getHeight()-200));
+                casesContener.setPreferredSize(new Dimension(getWidth()-200, getHeight()-200));
                 refreshMap();
 
             }
@@ -256,11 +257,10 @@ public class Editeur extends JFrame{
     }
 
     private void refreshMap() {
-        casesContener.setPreferredSize(new Dimension(getWidth()-200, getHeight()-200));
-        caseSizeX = casesContener.getWidth() / tailleMapX;
-        System.out.println(caseSizeX+" caseSizeX = " +tailleMapX+" / " +casesContener.getWidth());
-        caseSizeY = casesContener.getHeight()/ tailleMapY;
-        System.out.println(caseSizeY+" caseSizeY = " +tailleMapY+" / " +casesContener.getHeight());
+        caseSizeX = (getWidth()-200) / tailleMapX;
+        System.out.println(caseSizeX+" caseSizeX = " +tailleMapX+" / " + (getWidth()-200));
+        caseSizeY = (getHeight()-200) / tailleMapY;
+        System.out.println(caseSizeY+" caseSizeY = " +tailleMapY+" / " + (getHeight()-200));
         if (caseSizeX < 1 || caseSizeY <1){
             casesContener.setEnabled(false);
         }else{
@@ -276,6 +276,7 @@ public class Editeur extends JFrame{
             murs.setVisible(true);
             sols.setVisible(false);
         }
+        repaint();
     }
 
     private void changeSelectImage(int index){
