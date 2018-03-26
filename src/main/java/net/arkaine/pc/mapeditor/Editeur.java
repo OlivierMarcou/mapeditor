@@ -59,10 +59,13 @@ public class Editeur extends JFrame{
 
     private JTextField filename = new JTextField(), dir = new JTextField();
     private JLabel transparence = new JLabel("Transparence");
+    public static JSlider alphaSlider = new JSlider();
     private JCheckBox traversableCheckBox = new JCheckBox("Traversable");
     private JLabel lumiere= new JLabel("Lumiere");
+    public static JSlider lightSlider = new JSlider();
     private JLabel atmosphere = new JLabel("Atmosphere");
     private JLabel life = new JLabel("Life");
+    public static JSlider lifeSlider = new JSlider();
     private JLabel typeCase = new JLabel("Type case :");
 
     private List<SelectPanel> panelsMurs = new ArrayList<>();
@@ -72,8 +75,8 @@ public class Editeur extends JFrame{
     private JPanel murs = new JPanel();
     private JPanel sols = new JPanel();
 
-    private Map<Integer,Image> imagesMurs = Utils.loadImages("/home/olivier/workspace/mapeditor/src/main/resources/mursShoot/");
-    private Map<Integer,Image> imagesSols = Utils.loadImages("/home/olivier/workspace/mapeditor/src/main/resources/solsShoot/");
+    private Map<Integer,Image> imagesMurs = Utils.loadImages("resources/mursShoot/");
+    private Map<Integer,Image> imagesSols = Utils.loadImages("resources/solsShoot/");
 
     public void load(String file){
         map = new MapLoader(file,1);
@@ -89,6 +92,16 @@ public class Editeur extends JFrame{
         tailleMapX = x;
         tailleMapY = y;
         tailleMapZ = z;
+        alphaSlider.setMinorTickSpacing(1);
+        alphaSlider.setMinimum(0);
+        alphaSlider.setMaximum(1000);
+        alphaSlider.setValue(1000);
+        lightSlider.setMinimum(0);
+        lightSlider.setMaximum(1000);
+        lightSlider.setValue(1000);
+        lifeSlider.setMinimum(0);
+        lifeSlider.setMaximum(1024);
+        lifeSlider.setValue(1024);
         map = new MapLoader(tailleMapX, tailleMapY, tailleMapZ);
         casesContener = new JMap(map);
         map.loadImagesShoot("resources/");
@@ -143,13 +156,13 @@ public class Editeur extends JFrame{
 
         c.gridx=1;
         c.gridy=1;
-        c.gridwidth=1;
+        c.gridwidth=2;
         c.gridheight= 1;
         this.add(loadButton, c);
 
         c.gridx=1;
         c.gridy=2;
-        c.gridwidth=1;
+        c.gridwidth=2;
         c.gridheight= 1;
         this.add(saveButton, c);
 
@@ -158,6 +171,12 @@ public class Editeur extends JFrame{
         c.gridwidth=1;
         c.gridheight= 1;
         this.add(transparence , c);
+
+        c.gridx=2;
+        c.gridy=3;
+        c.gridwidth=1;
+        c.gridheight= 1;
+        this.add(alphaSlider , c);
 
         c.gridx=1;
         c.gridy=4;
@@ -170,6 +189,11 @@ public class Editeur extends JFrame{
         c.gridwidth=1;
         c.gridheight= 1;
         this.add(lumiere, c);
+        c.gridx=2;
+        c.gridy=5;
+        c.gridwidth=1;
+        c.gridheight= 1;
+        this.add(lightSlider , c);
 
         c.gridx=1;
         c.gridy=6;

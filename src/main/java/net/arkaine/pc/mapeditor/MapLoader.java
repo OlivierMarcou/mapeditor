@@ -84,20 +84,20 @@ public class MapLoader implements Serializable {
         load(sauvegarde);
         switch (this.typeDeVue){
             case 0:
-                this.sols = Utils.loadImages("solsIso");//TODO: absolut path here !!!
-                this.murs = Utils.loadImages("mursIso");
+                this.sols = Utils.loadImages("resources/solsIso");
+                this.murs = Utils.loadImages("resources/mursIso");
                 break;
             case 1:
-                this.sols = Utils.loadImages("/home/olivier/workspace/mapeditor/src/main/resources/solsShoot");
-                this.murs = Utils.loadImages("/home/olivier/workspace/mapeditor/src/main/resources/mursShoot");
+                this.sols = Utils.loadImages("resources/solsShoot");
+                this.murs = Utils.loadImages("resources/mursShoot");
                 break;
             case 2:
-                this.sols = Utils.loadImages("solsDM");
-                this.murs = Utils.loadImages("mursDM");
+                this.sols = Utils.loadImages("resources/solsDM");
+                this.murs = Utils.loadImages("resources/mursDM");
                 break;
             case 3:
-                this.sols = Utils.loadImages("solsCun");
-                this.murs = Utils.loadImages("mursGun");
+                this.sols = Utils.loadImages("resources/solsCun");
+                this.murs = Utils.loadImages("resources/mursGun");
                 break;
         }
     }
