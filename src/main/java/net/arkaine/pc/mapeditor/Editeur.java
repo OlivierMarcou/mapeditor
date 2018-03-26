@@ -15,6 +15,31 @@ import java.util.Map;
 public class Editeur extends JFrame{
 
     private static int tailleMapX;
+
+    public static int getTailleMapX() {
+        return tailleMapX;
+    }
+
+    public static void setTailleMapX(int tailleMapX) {
+        Editeur.tailleMapX = tailleMapX;
+    }
+
+    public static int getTailleMapY() {
+        return tailleMapY;
+    }
+
+    public static void setTailleMapY(int tailleMapY) {
+        Editeur.tailleMapY = tailleMapY;
+    }
+
+    public static int getTailleMapZ() {
+        return tailleMapZ;
+    }
+
+    public static void setTailleMapZ(int tailleMapZ) {
+        Editeur.tailleMapZ = tailleMapZ;
+    }
+
     private static int tailleMapY;
     private static int tailleMapZ;
 
@@ -74,7 +99,7 @@ public class Editeur extends JFrame{
         haut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(currentZ<tailleMapZ)
+                if(currentZ<tailleMapZ-1)
                     currentZ++;
                 afficheBarImage();
             }

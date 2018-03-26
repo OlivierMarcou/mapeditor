@@ -45,6 +45,10 @@ public class JMap extends JPanel {
                         image = map.getSols().get(map.carte[x][y][Editeur.currentZ].type);
                     }catch(NullPointerException e){
 
+                    }catch (IndexOutOfBoundsException ex){
+                        System.out.println("x - taille  x: "+ x + " - "+ Editeur.getTailleMapX());
+                        System.out.println("y - taille  y: "+ y + " - "+ Editeur.getTailleMapY());
+                        System.out.println("z - taille  z: "+ Editeur.currentZ + " - "+ Editeur.getTailleMapZ());
                     }
                 }
                 else
