@@ -13,8 +13,8 @@ public class MouseAdapterJMap extends MouseAdapter {
         super.mousePressed(e);
         JMap map = (JMap)e.getSource();
         int life = Editeur.lifeSlider.getValue();
-        float alpha = Editeur.alphaSlider.getValue()/1000f;
-        float light = Editeur.lightSlider.getValue()/1000f;
+        float alpha = Editeur.alphaSlider.getValue();
+        int light = Editeur.lightSlider.getValue();
         map.drawCase(Editeur.selectCase+"_"
                 +life
                 +"_0_0_"

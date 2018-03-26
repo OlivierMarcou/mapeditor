@@ -94,11 +94,11 @@ public class Editeur extends JFrame{
         tailleMapZ = z;
         alphaSlider.setMinorTickSpacing(1);
         alphaSlider.setMinimum(0);
-        alphaSlider.setMaximum(1000);
-        alphaSlider.setValue(1000);
-        lightSlider.setMinimum(0);
-        lightSlider.setMaximum(1000);
-        lightSlider.setValue(1000);
+        alphaSlider.setMaximum(1);
+        alphaSlider.setValue(1);
+        lightSlider.setMinimum(-255);
+        lightSlider.setMaximum(255);
+        lightSlider.setValue(0);
         lifeSlider.setMinimum(0);
         lifeSlider.setMaximum(1024);
         lifeSlider.setValue(1024);
