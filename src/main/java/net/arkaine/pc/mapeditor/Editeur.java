@@ -91,7 +91,7 @@ public class Editeur extends JFrame{
         tailleMapZ = z;
         map = new MapLoader(tailleMapX, tailleMapY, tailleMapZ);
         casesContener = new JMap(map);
-        map.loadImagesShoot("/home/olivier/workspace/mapeditor/src/main/resources/");
+        map.loadImagesShoot("resources/");
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loadButton.addActionListener(new OpenL());
