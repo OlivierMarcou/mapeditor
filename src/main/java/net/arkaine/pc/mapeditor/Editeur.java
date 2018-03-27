@@ -96,7 +96,7 @@ public class Editeur extends JFrame{
         alphaSlider.setMinimum(0);
         alphaSlider.setMaximum(1);
         alphaSlider.setValue(1);
-        lightSlider.setMinimum(-255);
+        lightSlider.setMinimum(0);
         lightSlider.setMaximum(255);
         lightSlider.setValue(0);
         lifeSlider.setMinimum(0);
@@ -189,6 +189,7 @@ public class Editeur extends JFrame{
         c.gridwidth=1;
         c.gridheight= 1;
         this.add(lumiere, c);
+
         c.gridx=2;
         c.gridy=5;
         c.gridwidth=1;

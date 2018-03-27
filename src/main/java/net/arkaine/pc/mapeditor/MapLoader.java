@@ -110,24 +110,26 @@ public class MapLoader implements Serializable {
 
     public boolean save(String absolutPath){
         String data = tailleX+"_"+tailleY+"_"+tailleZ+";\r\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append(data);
+        String caseVide = "0_0_0_0_0_0_0_0|";
         for (int z=0;z<tailleZ;z++){
-            data = data + "\r\n";
+            sb.append("\r\n");
             for (int y=0;y<tailleY;y++){
-                data = data + "\r\n";
+                sb.append("\r\n");
                 for (int x=0;x<tailleX;x++){
-                    String caseVide = "0_0_0_0_0_0_0_0|";
                     try {
-                       data += carte[x][y][z].toString();
+                       sb.append(carte[x][y][z].toString());
                     }catch (ArrayIndexOutOfBoundsException e){
                        return false;
                     }catch (NullPointerException ex){
-                       data += caseVide;
+                        sb.append(caseVide);
                     }
                 }
             }
         }
-        data = data + ";";
-        Utils.openIsoFileandWrite(data, absolutPath, true);
+        sb.append(";");
+        Utils.openIsoFileandWrite(sb.toString(), absolutPath, true);
         return false;
     }
 

@@ -31,7 +31,7 @@ public class Case implements Serializable {
         this.vie = Integer.parseInt(valeurs[1]);
         this.indexAnim = Integer.parseInt(valeurs[2]);
         this.atmosphere = Integer.parseInt(valeurs[3]);
-        this.lumiere = Integer.parseInt(valeurs[4]);
+        this.lumiere = Math.abs(Integer.parseInt(valeurs[4]));
         this.traversable = Integer.parseInt(valeurs[5]);
         this.transparence = Float.parseFloat(valeurs[6]);
         this.couleurAtmos = Integer.parseInt(valeurs[7]);
