@@ -20,21 +20,21 @@ public class Case implements Serializable {
     int traversable;//255 = non, <255 oui mais freinne
 
     float transparence;//0-1
-    int couleurAtmos;//0-255
+    String couleurAtmos;//r.g.b
 
     int indexAnim;//0-255
     List<Image> animation;
 
     public Case(String values){
         String[] valeurs = values.split("_");
-        this.type = Integer.parseInt(valeurs[0]);
-        this.vie = Integer.parseInt(valeurs[1]);
-        this.indexAnim = Integer.parseInt(valeurs[2]);
-        this.atmosphere = Integer.parseInt(valeurs[3]);
-        this.lumiere = Math.abs(Integer.parseInt(valeurs[4]));
-        this.traversable = Integer.parseInt(valeurs[5]);
-        this.transparence = Float.parseFloat(valeurs[6]);
-        this.couleurAtmos = Integer.parseInt(valeurs[7]);
+        if(valeurs[0] != null){this.type = Integer.parseInt(valeurs[0]);}else{this.type =0;}
+        if(valeurs[1] != null){this.vie = Integer.parseInt(valeurs[1]);}else{this.vie =0;}
+        if(valeurs[2] != null){this.indexAnim = Integer.parseInt(valeurs[2]);}else{this.indexAnim =0;}
+        if(valeurs[3] != null){this.atmosphere = Integer.parseInt(valeurs[3]);}else{this.atmosphere =0;}
+        if(valeurs[4] != null){this.lumiere = Integer.parseInt(valeurs[4]);}else{this.lumiere =255;}
+        if(valeurs[5] != null){this.traversable = Integer.parseInt(valeurs[5]);}else{this.traversable =0;}
+        if(valeurs[6] != null){this.transparence = Float.parseFloat(valeurs[6]);}else{this.transparence =1;}
+        this.couleurAtmos = valeurs[7];
     }
 
     public void loadPictures(){
@@ -43,7 +43,7 @@ public class Case implements Serializable {
 
     @Override
     public String toString(){
-        String caseString="0_0_0_0_0_0_0_0|";
+        String caseString="|";
         try {
             caseString = type + "_" + vie + "_" + indexAnim + "_" + atmosphere + "_" + lumiere + "_" + traversable + "_" + transparence + "_" + couleurAtmos + "|";
         }catch (NullPointerException e){

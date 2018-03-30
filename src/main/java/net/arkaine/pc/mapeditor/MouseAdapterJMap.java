@@ -17,11 +17,11 @@ public class MouseAdapterJMap extends MouseAdapter {
         int light = Editeur.lightSlider.getValue();
         map.drawCase(Editeur.selectCase+"_"
                 +life
-                +"_0_0_"
+                +"___"
                 +light
-                +"_0_"
+                +"__"
                 +alpha
-                +"_0", e.getX(), e.getY(), Editeur.currentZ);
+                +"_", e.getX(), e.getY(), Editeur.currentZ);
         System.out.println("Mon type : "+e.getSource().getClass());
         System.out.println("Je suis : "+((JMap)e.getSource()).getName());
         System.out.println("press !!!");
