@@ -27,14 +27,57 @@ public class Case implements Serializable {
 
     public Case(String values){
         String[] valeurs = values.split("_");
-        if(valeurs[0] != null){this.type = Integer.parseInt(valeurs[0]);}else{this.type =0;}
-        if(valeurs[1] != null){this.vie = Integer.parseInt(valeurs[1]);}else{this.vie =0;}
-        if(valeurs[2] != null){this.indexAnim = Integer.parseInt(valeurs[2]);}else{this.indexAnim =0;}
-        if(valeurs[3] != null){this.atmosphere = Integer.parseInt(valeurs[3]);}else{this.atmosphere =0;}
-        if(valeurs[4] != null){this.lumiere = Integer.parseInt(valeurs[4]);}else{this.lumiere =255;}
-        if(valeurs[5] != null){this.traversable = Integer.parseInt(valeurs[5]);}else{this.traversable =0;}
-        if(valeurs[6] != null){this.transparence = Float.parseFloat(valeurs[6]);}else{this.transparence =1;}
-        this.couleurAtmos = valeurs[7];
+        if (valeurs.length > 1) {
+            if (valeurs[0] != null && !valeurs[0].equals("")) {
+                this.type = Integer.parseInt(valeurs[0]);
+            } else {
+                this.type = 0;
+            }
+            if (valeurs[1] != null && !valeurs[1].equals("")) {
+                this.vie = Integer.parseInt(valeurs[1]);
+            } else {
+                this.vie = 0;
+            }
+            if (valeurs[2] != null && !valeurs[2].equals("")) {
+                this.indexAnim = Integer.parseInt(valeurs[2]);
+            } else {
+                this.indexAnim = 0;
+            }
+            if (valeurs[3] != null && !valeurs[3].equals("")) {
+                this.atmosphere = Integer.parseInt(valeurs[3]);
+            } else {
+                this.atmosphere = 0;
+            }
+            if (valeurs[4] != null && !valeurs[4].equals("")) {
+                this.lumiere = Integer.parseInt(valeurs[4]);
+            } else {
+                this.lumiere = 255;
+            }
+            if (valeurs[5] != null && !valeurs[5].equals("")) {
+                this.traversable = Integer.parseInt(valeurs[5]);
+            } else {
+                this.traversable = 0;
+            }
+            if (valeurs[6] != null && !valeurs[6].equals("")) {
+                this.transparence = Float.parseFloat(valeurs[6]);
+            } else {
+                this.transparence = 1;
+            }
+            if (valeurs[7] != null && !valeurs[7].equals("")) {
+                this.couleurAtmos = valeurs[7];
+            } else {
+                this.couleurAtmos = "N";
+            }
+        }else {
+            this.type = 0;
+            this.vie = 0;
+            this.indexAnim = 0;
+            this.atmosphere = 0;
+            this.lumiere = 255;
+            this.traversable = 0;
+            this.transparence = 1;
+            this.couleurAtmos = "N";
+        }
     }
 
     public void loadPictures(){
@@ -43,9 +86,10 @@ public class Case implements Serializable {
 
     @Override
     public String toString(){
-        String caseString="|";
+        String caseString="N|";
         try {
             caseString = type + "_" + vie + "_" + indexAnim + "_" + atmosphere + "_" + lumiere + "_" + traversable + "_" + transparence + "_" + couleurAtmos + "|";
+            if("0_0_0_0_255_0_1.0_N|".equals(caseString))return "N|";
         }catch (NullPointerException e){
             return caseString;
         }

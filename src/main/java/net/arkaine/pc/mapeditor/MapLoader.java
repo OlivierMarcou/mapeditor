@@ -112,7 +112,7 @@ public class MapLoader implements Serializable {
         String data = tailleX+"_"+tailleY+"_"+tailleZ+";\r\n";
         StringBuilder sb = new StringBuilder();
         sb.append(data);
-        String caseVide = "|";
+        String caseVide = "N|";
         for (int z=0;z<tailleZ;z++){
             sb.append("\r\n");
             for (int y=0;y<tailleY;y++){

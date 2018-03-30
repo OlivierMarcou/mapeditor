@@ -21,17 +21,17 @@ public class MouseAdapterJMap extends MouseAdapter {
                 +light
                 +"__"
                 +alpha
-                +"_", e.getX(), e.getY(), Editeur.currentZ);
-        System.out.println("Mon type : "+e.getSource().getClass());
-        System.out.println("Je suis : "+((JMap)e.getSource()).getName());
-        System.out.println("press !!!");
+                +"_N", e.getX(), e.getY(), Editeur.currentZ);
+//        System.out.println("Mon type : "+e.getSource().getClass());
+//        System.out.println("Je suis : "+((JMap)e.getSource()).getName());
+//        System.out.println("press !!!");
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         super.mouseReleased(e);
-        System.out.println("Mon type : "+e.getSource().getClass());
-        System.out.println("Je suis : "+((JMap)e.getSource()).getName());
-        System.out.println("press release !!!");
+//        System.out.println("Mon type : "+e.getSource().getClass());
+//        System.out.println("Je suis : "+((JMap)e.getSource()).getName());
+//        System.out.println("press release !!!");
     }
 }
