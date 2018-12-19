@@ -7,6 +7,7 @@ import java.io.*;
 import java.nio.CharBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -157,24 +158,42 @@ public static String openFile(String source) {
         return image;
     }
 
-    static public Map<Integer, Image> loadImages(String path){
-        File directory = new File(path);
-        Map<Integer, Image> bitmaps = new HashMap<Integer, Image>();
-
-        for(int i= 1;i<=directory.list().length; i++)
-            {
-                try
-                {
-                    bitmaps.put(i, loadImage(path + File.separatorChar + directory.list()[i-1]));
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-              //  }
+    static public Map<Integer, Image> loadImages(String folder){
+        Map<Integer, Image> bitmaps = new HashMap<>();
+        File dossier = new File( folder);
+        int i = 0;
+        File[] files = dossier.listFiles();
+        Arrays.sort(files);
+        for(File file: files)
+        {
+            try {
+                String[] indexes = file.getName().split("_");
+                bitmaps.put(Integer.valueOf(indexes[0]), ImageIO.read(file));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        }
         return bitmaps;
     }
+//
+//    static public Map<Integer, Image> loadImages(String path){
+//        File directory = new File(path);
+//        Map<Integer, Image> bitmaps = new HashMap<Integer, Image>();
+//
+//        for(int i= 1;i<=directory.list().length; i++)
+//            {
+//                try
+//                {
+//                    bitmaps.put(i, loadImage(path + File.separatorChar + directory.list()[i-1]));
+//                }
+//                catch (Exception e)
+//                {
+//                    e.printStackTrace();
+//                }
+//              //  }
+//            }
+//        return bitmaps;
+//    }
 
     static String imageArbo(String arbo, File currentFolder, String filterFile, String filterFolder){
         if(currentFolder.exists() && currentFolder.listFiles() != null ) {
