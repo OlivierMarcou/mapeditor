@@ -46,7 +46,7 @@ public class Editeur extends JFrame{
     public static int caseSizeX ;
     public static int caseSizeY ;
     public static int currentZ = 0;
-    public static int selectCase = 0;
+    public static int selectCase = -1;
 
     private static MapLoader map;
     private JMap casesContener;
@@ -238,7 +238,15 @@ public class Editeur extends JFrame{
         c.gridheight= 1;
         indexImage.setPreferredSize(new Dimension(60,20));
         this.add(indexImage, c);
-
+        indexImage.addActionListener(e -> {
+            int change = -1;
+            try{
+                change = Integer.valueOf(indexImage.getText());
+            }catch(NumberFormatException ex){
+            }
+            if(change<0)
+                changeSelectImage(-1);
+        });
         c.gridx=0;
         c.gridy=12;
         c.gridwidth=3;
@@ -257,7 +265,6 @@ public class Editeur extends JFrame{
         murs.setLayout(new GridBagLayout());
         for(Image image: imagesMurs.values()){
             SelectPanel panel = new SelectPanel(image);
-            indexImg ++;
             String name = "selectMur"+indexImg;
             panel.setName(name);
             panel.setBounds(indexImg*40,40,40,40);
@@ -271,6 +278,7 @@ public class Editeur extends JFrame{
             murs.add(panel, c);
             panelsMurs.add(panel);
             final int finalIndexImg = indexImg;
+            indexImg ++;
             panel.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -284,20 +292,20 @@ public class Editeur extends JFrame{
         sols.setLayout(new GridBagLayout());
         for(Image image: imagesSols.values()){
             SelectPanel panel = new SelectPanel(image);
-            indexImg ++;
             String name = "selectMur"+indexImg;
             panel.setName(name);
             panel.setBounds(indexImg*40,40,40,40);
             panel.setVisible(true);
             panel.setBorder(new LineBorder(Color.black));
             panel.setBackground(Color.BLUE);
-            c.gridx=indexImg-1;
+            c.gridx=indexImg;
             c.gridy=0;
             c.gridwidth = 1;
             c.gridheight = 1;
             sols.add(panel, c);
             panelsSols.add(panel);
             final int finalIndexImg = indexImg;
+            indexImg ++;
             panel.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {

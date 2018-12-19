@@ -15,13 +15,16 @@ public class MouseAdapterJMap extends MouseAdapter {
         int life = Editeur.lifeSlider.getValue();
         float alpha = Editeur.alphaSlider.getValue();
         int light = Editeur.lightSlider.getValue();
-        map.drawCase(Editeur.selectCase+"_"
+        if(Editeur.selectCase > -1)
+            map.drawCase(Editeur.selectCase+"_"
                 +life
                 +"___"
                 +light
                 +"__"
                 +alpha
                 +"_N", e.getX(), e.getY(), Editeur.currentZ);
+        else
+            map.drawCase("-1_0_0_0_255_0_1.0_N", e.getX(), e.getY(), Editeur.currentZ);
 //        System.out.println("Mon type : "+e.getSource().getClass());
 //        System.out.println("Je suis : "+((JMap)e.getSource()).getName());
 //        System.out.println("press !!!");

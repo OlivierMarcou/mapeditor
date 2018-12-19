@@ -39,7 +39,7 @@ public class JMap extends JPanel {
         Graphics2D g2d = (Graphics2D) grphcs;
         for(int x =0; x<map.getTailleX();x++){
             for(int y =0; y<map.getTailleY();y++){
-                Image image =null ;
+                Image image = null ;
                 if(Editeur.currentZ%2==0){
                     try {
                         image = map.getSols().get(map.carte[x][y][Editeur.currentZ].type);

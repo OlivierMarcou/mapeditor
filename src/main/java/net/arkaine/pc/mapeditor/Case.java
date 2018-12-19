@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Case implements Serializable {
 
-    int type;//0-1024
+    Integer type;//0-1024
     int vie;//0-1024  max = indestructible
 
     int atmosphere;//0-255
@@ -69,7 +69,7 @@ public class Case implements Serializable {
                 this.couleurAtmos = "N";
             }
         }else {
-            this.type = 0;
+            this.type = -1;
             this.vie = 0;
             this.indexAnim = 0;
             this.atmosphere = 0;
@@ -80,8 +80,15 @@ public class Case implements Serializable {
         }
     }
 
-    public void loadPictures(){
-
+    public void setNullable(){
+            this.type = -1;
+            this.vie = 0;
+            this.indexAnim = 0;
+            this.atmosphere = 0;
+            this.lumiere = 255;
+            this.traversable = 0;
+            this.transparence = 1;
+            this.couleurAtmos = "N";
     }
 
     @Override
@@ -90,6 +97,8 @@ public class Case implements Serializable {
         try {
             caseString = type + "_" + vie + "_" + indexAnim + "_" + atmosphere + "_" + lumiere + "_" + traversable + "_" + transparence + "_" + couleurAtmos + "|";
             if("0_0_0_0_255_0_1.0_N|".equals(caseString))return "N|";
+            if("null_0_0_0_255_0_1.0_N|".equals(caseString))return "N|";
+            if("-1_0_0_0_255_0_1.0_N|".equals(caseString))return "N|";
         }catch (NullPointerException e){
             return caseString;
         }
