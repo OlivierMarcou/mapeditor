@@ -75,11 +75,11 @@ public class Editeur extends JFrame{
     private JPanel murs = new JPanel();
     private JPanel sols = new JPanel();
 
-    private Map<Integer,Image> imagesMurs = Utils.loadImages("resources/mursShoot/");
-    private Map<Integer,Image> imagesSols = Utils.loadImages("resources/solsShoot/");
+    private Map<Integer,Image> imagesMurs = Utils.loadImages("resources/mursIso/");
+    private Map<Integer,Image> imagesSols = Utils.loadImages("resources/solsIso/");
 
     public void load(String file){
-        map = new MapLoader(file,1);
+        map = new MapLoader(file);
         tailleMapX = map.getTailleX();
         tailleMapY = map.getTailleY();
         tailleMapZ = map.getTailleZ();
@@ -104,7 +104,6 @@ public class Editeur extends JFrame{
         lifeSlider.setValue(1024);
         map = new MapLoader(tailleMapX, tailleMapY, tailleMapZ);
         casesContener = new JMap(map);
-        map.loadImagesShoot("resources/");
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loadButton.addActionListener(new OpenL());
@@ -129,7 +128,8 @@ public class Editeur extends JFrame{
         this.setLayout(new GridBagLayout());
         this.setMinimumSize(new Dimension(600, 600));
         this.setBounds(0,0,600, 600);
-        casesContener.setMinimumSize(new Dimension(200, 200));
+        casesContener.setMinimumSize(new Dimension(getWidth()-200, getHeight()-200));
+        casesContener.setMaximumSize(new Dimension(getWidth()-200, getHeight()-200));
         casesContener.setPreferredSize(new Dimension(getWidth()-200, getHeight()-200));
         refreshMap();
         casesContener.setLayout(new GridBagLayout());
@@ -137,8 +137,12 @@ public class Editeur extends JFrame{
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
+
+                casesContener.setMinimumSize(new Dimension(getWidth()-200, getHeight()-200));
+                casesContener.setMaximumSize(new Dimension(getWidth()-200, getHeight()-200));
                 casesContener.setPreferredSize(new Dimension(getWidth()-200, getHeight()-200));
                 refreshMap();
+                repaint();
 
             }
         });
@@ -147,8 +151,7 @@ public class Editeur extends JFrame{
         casesContener.addMouseListener(new MouseAdapterJMap());
 
         GridBagConstraints c = new GridBagConstraints();
-
-        c.gridx=0;
+        c.gridx = 0;
         c.gridy=0;
         c.gridwidth=1;
         c.gridheight= 11;
@@ -257,7 +260,7 @@ public class Editeur extends JFrame{
             indexImg ++;
             String name = "selectMur"+indexImg;
             panel.setName(name);
-            panel.setBounds(indexImg*40,400,40,40);
+            panel.setBounds(indexImg*40,40,40,40);
             panel.setVisible(true);
             panel.setBorder(new LineBorder(Color.black));
             panel.setBackground(Color.BLUE);
@@ -284,7 +287,7 @@ public class Editeur extends JFrame{
             indexImg ++;
             String name = "selectMur"+indexImg;
             panel.setName(name);
-            panel.setBounds(indexImg*40,400,40,40);
+            panel.setBounds(indexImg*40,40,40,40);
             panel.setVisible(true);
             panel.setBorder(new LineBorder(Color.black));
             panel.setBackground(Color.BLUE);
@@ -307,10 +310,10 @@ public class Editeur extends JFrame{
     }
 
     private void refreshMap() {
-        caseSizeX = (getWidth()-200) / tailleMapX;
-        System.out.println(caseSizeX+" caseSizeX = " +tailleMapX+" / " + (getWidth()-200));
-        caseSizeY = (getHeight()-200) / tailleMapY;
-        System.out.println(caseSizeY+" caseSizeY = " +tailleMapY+" / " + (getHeight()-200));
+        caseSizeX = casesContener.getWidth() / tailleMapX;
+        System.out.println(caseSizeX+" caseSizeX = " +casesContener.getWidth()+" / " + tailleMapX);
+        caseSizeY = casesContener.getHeight() / tailleMapY;
+        System.out.println(caseSizeY+" caseSizeY = " +casesContener.getHeight()+" / " + tailleMapY);
         if (caseSizeX < 1 || caseSizeY <1){
             casesContener.setEnabled(false);
         }else{

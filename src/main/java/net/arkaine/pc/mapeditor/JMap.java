@@ -56,7 +56,7 @@ public class JMap extends JPanel {
                     try {
                         image = map.getMurs().get(map.carte[x][y][Editeur.currentZ].type);
                     }catch(NullPointerException e){
-
+                        System.out.println("image null");
                     }
                 }
                 g2d.drawImage(image, Editeur.caseSizeX*x, Editeur.caseSizeY*y, Editeur.caseSizeX, Editeur.caseSizeY, this);

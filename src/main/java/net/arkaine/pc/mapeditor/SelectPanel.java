@@ -11,7 +11,9 @@ public class SelectPanel extends JPanel {
 
     public SelectPanel (Image image) {
         this.image = image;
-        setPreferredSize(new Dimension(20, 20));
+        setMinimumSize(new Dimension(32, 32));
+        setMaximumSize(new Dimension(32, 32));
+        setPreferredSize(new Dimension(32, 32));
         repaint();
 
     }
@@ -20,6 +22,6 @@ public class SelectPanel extends JPanel {
     protected void paintComponent(Graphics grphcs) {
         super.paintComponent(grphcs);
         Graphics2D g2d = (Graphics2D) grphcs;
-        g2d.drawImage(image, 0, 0, 20, 20, this);
+        g2d.drawImage(image, 0, 0, 32, 32, this);
     }
 }

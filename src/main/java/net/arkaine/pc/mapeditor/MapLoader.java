@@ -15,8 +15,6 @@ import java.util.Map;
  */
 public class MapLoader implements Serializable {
 
-    private int typeDeVue = 0; //  0 = iso3D : 1 = Dungeon crawler : 2 = shoot em up : 3 = canonier
-
     //X Est en Ouest
     private int tailleX = 0;
     //Y Nord en Sud
@@ -73,38 +71,18 @@ public class MapLoader implements Serializable {
 
 
     public MapLoader(int x, int y, int z){
+        this.sols = Utils.loadImages("resources/solsIso");
+        this.murs = Utils.loadImages("resources/mursIso");
         this.tailleX = x;
         this.tailleY = y;
         this.tailleZ = z;
         this.carte = new Case[tailleX][tailleY][tailleZ];
     }
 
-    public MapLoader(String sauvegarde, int typeDeVue){
-        this.typeDeVue = typeDeVue;
+    public MapLoader(String sauvegarde){
         load(sauvegarde);
-        switch (this.typeDeVue){
-            case 0:
-                this.sols = Utils.loadImages("resources/solsIso");
-                this.murs = Utils.loadImages("resources/mursIso");
-                break;
-            case 1:
-                this.sols = Utils.loadImages("resources/solsShoot");
-                this.murs = Utils.loadImages("resources/mursShoot");
-                break;
-            case 2:
-                this.sols = Utils.loadImages("resources/solsDM");
-                this.murs = Utils.loadImages("resources/mursDM");
-                break;
-            case 3:
-                this.sols = Utils.loadImages("resources/solsCun");
-                this.murs = Utils.loadImages("resources/mursGun");
-                break;
-        }
-    }
-
-    public void loadImagesShoot(String path){
-            this.sols = Utils.loadImages(path + File.separatorChar + "solsShoot");
-            this.murs = Utils.loadImages(path + File.separatorChar + "mursShoot");
+        this.sols = Utils.loadImages("resources/solsIso");
+        this.murs = Utils.loadImages("resources/mursIso");
     }
 
 
@@ -187,32 +165,5 @@ public class MapLoader implements Serializable {
         return !isMurs;
     }
 
-    private int decalY(int yy, int xx, int newWidth) {
-        switch (this.typeDeVue){
-            case 0:
-                return (int) (((newWidth*0.18f)*yy)+((newWidth*0.18f)*xx));
-            case 1:
-                return newWidth*yy;
-            case 2:
-                return 0;
-            case 3:
-                return 0;
-        }
-        return 0;
-    }
-
-    private int decalX(int yy, int xx, int newWidth) {
-        switch (this.typeDeVue){
-            case 0:
-                return ((newWidth / 2) * xx) - ((newWidth / 2) * yy);
-            case 1:
-                return newWidth*xx;
-            case 2:
-                return 0;
-            case 3:
-                return 0;
-        }
-        return 0;
-    }
 
 }
