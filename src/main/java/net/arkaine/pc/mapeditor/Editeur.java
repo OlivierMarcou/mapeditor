@@ -149,6 +149,7 @@ public class Editeur extends JFrame{
 
         casesContener.setBorder(new LineBorder(Color.BLACK));
         casesContener.addMouseListener(new MouseAdapterJMap());
+        casesContener.addMouseMotionListener(new MouseMotionJMap());
 
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
@@ -263,58 +264,45 @@ public class Editeur extends JFrame{
 
         int indexImg = 0 ;
         murs.setLayout(new GridBagLayout());
+         addSelectImage(c, -1, null, murs, panelsMurs);
         for(Image image: imagesMurs.values()){
-            SelectPanel panel = new SelectPanel(image);
-            String name = "selectMur"+indexImg;
-            panel.setName(name);
-            panel.setBounds(indexImg*40,40,40,40);
-            panel.setVisible(true);
-            panel.setBorder(new LineBorder(Color.black));
-            panel.setBackground(Color.BLUE);
-            c.gridx=indexImg-1;
-            c.gridy=0;
-            c.gridwidth = 1;
-            c.gridheight = 1;
-            murs.add(panel, c);
-            panelsMurs.add(panel);
-            final int finalIndexImg = indexImg;
-            indexImg ++;
-            panel.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    super.mouseClicked(e);
-                    changeSelectImage(finalIndexImg);
-                }
-            });
+            indexImg = addSelectImage(c, indexImg, image, murs, panelsMurs);
         }
 
         indexImg = 0 ;
         sols.setLayout(new GridBagLayout());
+        addSelectImage(c, -1, null, sols, panelsSols);
         for(Image image: imagesSols.values()){
-            SelectPanel panel = new SelectPanel(image);
-            String name = "selectMur"+indexImg;
-            panel.setName(name);
-            panel.setBounds(indexImg*40,40,40,40);
-            panel.setVisible(true);
-            panel.setBorder(new LineBorder(Color.black));
-            panel.setBackground(Color.BLUE);
-            c.gridx=indexImg;
-            c.gridy=0;
-            c.gridwidth = 1;
-            c.gridheight = 1;
-            sols.add(panel, c);
-            panelsSols.add(panel);
-            final int finalIndexImg = indexImg;
-            indexImg ++;
-            panel.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    super.mouseClicked(e);
-                    changeSelectImage(finalIndexImg);
-                }
-            });
+            indexImg = addSelectImage(c, indexImg, image, sols, panelsSols);
         }
         afficheBarImage();
+    }
+
+    private int addSelectImage(GridBagConstraints c, int indexImg, Image image,
+                               JPanel panelImage, List<SelectPanel> panelImages) {
+        SelectPanel panel = new SelectPanel(image);
+        String name = "selectMur"+indexImg;
+        panel.setName(name);
+        panel.setBounds(indexImg*40,40,40,40);
+        panel.setVisible(true);
+        panel.setBorder(new LineBorder(Color.black));
+        panel.setBackground(Color.WHITE);
+        c.gridx=indexImg-1;
+        c.gridy=0;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        panelImage.add(panel, c);
+        panelImages.add(panel);
+        final int finalIndexImg = indexImg;
+        indexImg ++;
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                changeSelectImage(finalIndexImg);
+            }
+        });
+        return indexImg;
     }
 
     private void refreshMap() {
