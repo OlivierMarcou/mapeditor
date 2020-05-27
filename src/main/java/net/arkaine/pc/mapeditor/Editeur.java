@@ -75,8 +75,8 @@ public class Editeur extends JFrame{
     private JPanel murs = new JPanel();
     private JPanel sols = new JPanel();
 
-    private Map<Integer,Image> imagesMurs = Utils.loadImages("resources/mursIso/");
-    private Map<Integer,Image> imagesSols = Utils.loadImages("resources/solsIso/");
+    private Map<Integer,Image> imagesMurs = Utils.loadImages("/mursIso");
+    private Map<Integer,Image> imagesSols = Utils.loadImages("/solsIso");
 
     public void load(String file){
         map = new MapLoader(file);

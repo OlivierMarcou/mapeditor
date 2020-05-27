@@ -71,8 +71,8 @@ public class MapLoader implements Serializable {
 
 
     public MapLoader(int x, int y, int z){
-        this.sols = Utils.loadImages("resources/solsIso");
-        this.murs = Utils.loadImages("resources/mursIso");
+        this.sols = Utils.loadImages("/solsIso");
+        this.murs = Utils.loadImages("/mursIso");
         this.tailleX = x;
         this.tailleY = y;
         this.tailleZ = z;
@@ -81,8 +81,8 @@ public class MapLoader implements Serializable {
 
     public MapLoader(String sauvegarde){
         load(sauvegarde);
-        this.sols = Utils.loadImages("resources/solsIso");
-        this.murs = Utils.loadImages("resources/mursIso");
+        this.sols = Utils.loadImages("/solsIso");
+        this.murs = Utils.loadImages("/mursIso");
     }
 
 

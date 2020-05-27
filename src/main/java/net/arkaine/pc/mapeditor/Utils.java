@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URL;
 import java.nio.CharBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -160,7 +161,8 @@ public static String openFile(String source) {
 
     static public Map<Integer, Image> loadImages(String folder){
         Map<Integer, Image> bitmaps = new HashMap<>();
-        File dossier = new File( folder);
+        URL resource = Utils.class.getResource(folder);
+        File dossier = new File(resource.getFile());
         int i = 0;
         File[] files = dossier.listFiles();
         Arrays.sort(files);
