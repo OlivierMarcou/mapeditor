@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Case implements Serializable {
 
-    Integer type = 0;//0-1024
+    Integer type = -1;//0-1024
     int vie = 0;//0-1024  max = indestructible
 
     int atmosphere = 0;//0-255
