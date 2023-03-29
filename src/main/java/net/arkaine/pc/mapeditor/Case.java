@@ -25,6 +25,8 @@ public class Case implements Serializable {
     int indexAnim;//0-255
     List<Image> animation;
 
+    int heigh = -1;
+
     public Case(String values){
         String[] valeurs = values.split("_");
         if (valeurs.length > 1) {
@@ -67,6 +69,10 @@ public class Case implements Serializable {
                 this.couleurAtmos = valeurs[7];
             } else {
                 this.couleurAtmos = "N";
+            }
+
+            if (valeurs[8] != null && !valeurs[8].equals("")) {
+                this.heigh = Integer.parseInt(valeurs[8]);
             }
         }else {
             this.type = -1;
