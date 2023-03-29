@@ -29,9 +29,9 @@ public class MouseAdapterJMap extends MouseAdapter {
                 +light
                 +"__"
                 +alpha
-                +"_N_", e.getX(), e.getY(), Editeur.currentZ);
+                +"__N", e.getX(), e.getY(), Editeur.currentZ);
         else
-            map.drawCase("-1_0_0_0_255_0_1.0_N_-1", e.getX(), e.getY(), Editeur.currentZ);
+            map.drawCase("-1_0_0_0_255_0_1.0_-1_N", e.getX(), e.getY(), Editeur.currentZ);
     }
 
     @Override
