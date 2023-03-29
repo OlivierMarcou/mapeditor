@@ -51,11 +51,17 @@ public class Case implements Serializable {
             if (valeurs[6] != null && !valeurs[6].equals("")) {
                 this.transparence = Float.parseFloat(valeurs[6]);
             }
-            if (valeurs[7] != null && !valeurs[7].equals("")) {
-                this.heigh = Integer.parseInt(valeurs[7]);
-            }
-            if (valeurs[8] != null && !valeurs[8].equals("")) {
-                this.couleurAtmos = valeurs[8];
+            if (valeurs.length > 8){
+                if (valeurs[7] != null && !valeurs[7].equals("")) {
+                    this.heigh = Integer.parseInt(valeurs[7]);
+                }
+                if (valeurs[8] != null && !valeurs[8].equals("")) {
+                    this.couleurAtmos = valeurs[8];
+                }
+            }else{
+                if (valeurs[7] != null && !valeurs[7].equals("")) {
+                    this.couleurAtmos = valeurs[7];
+                }
             }
         }
     }
@@ -64,7 +70,7 @@ public class Case implements Serializable {
     public String toString(){
         String caseString="N|";
         try {
-            caseString = type + "_" + vie + "_" + indexAnim + "_" + atmosphere + "_" + lumiere + "_" + traversable + "_" + transparence + "_" +  "_" + heigh + couleurAtmos + "|";
+            caseString = type + "_" + vie + "_" + indexAnim + "_" + atmosphere + "_" + lumiere + "_" + traversable + "_" + transparence + "_" + heigh +  "_" + couleurAtmos + "|";
             if("0_0_0_0_255_0_1.0_0_N|".equals(caseString))return "N|";
             if("null_0_0_0_255_0_1.0_0_N|".equals(caseString))return "N|";
             if("-1_0_0_0_255_0_1.0_-1_N|".equals(caseString))return "N|";
